@@ -41,24 +41,36 @@ MediBook streamlines hospital appointment scheduling by providing patients with 
 ## Project Structure
 
 medibook-appointment-system/
+│
 ├── database/
-│ └── schema.sql
+│ └── schema.sql # MySQL database schema
+│
 ├── frontend/
 │ ├── config/
-│ │ └── config.js
+│ │ └── config.js # n8n webhook URL configuration
+│ │
 │ ├── css/
-│ │ ├── appointment.css
-│ │ └── style.css
+│ │ ├── appointment.css # Appointment form styles
+│ │ └── style.css # Homepage styles
+│ │
 │ ├── js/
-│ │ ├── appointment.js
-│ │ └── main.js
-│ ├── appointment.html
-│ └── index.html
+│ │ ├── appointment.js # Booking form logic
+│ │ └── main.js # Homepage JavaScript
+│ │
+│ ├── appointment.html # Booking page
+│ └── index.html # Homepage
+│
 ├── n8n-workflow/
-│ └── appointment-workflow.json
+│ └── appointment-workflow.json # n8n workflow export
+│
 ├── screenshots/
+│ ├── booking-form.png
+│ ├── homepage.png
+│ ├── n8n-workflow.png
+│ └── success-message.png
+│
+├── .gitignore
 └── README.md
-
 ## Quick Start
 
 ### Prerequisites
