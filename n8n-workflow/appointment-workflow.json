@@ -1,0 +1,466 @@
+{
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "appointment-booking",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -448,
+        -16
+      ],
+      "id": "e94852cf-4b18-48ee-9649-cd624bb92844",
+      "name": "Webhook",
+      "webhookId": "2e3eb065-fcec-40c1-bdea-980c6956c55b"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0a23cb59-ed65-4dc5-8e05-dc798ef61d7d",
+              "name": "patientName",
+              "value": "={{ $json.body.patientName }}",
+              "type": "string"
+            },
+            {
+              "id": "af8a9a62-4340-4e0c-b3fe-24503dd61dbf",
+              "name": "phone",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "80ab1761-8959-4ae6-9d89-275751ef4d06",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "0ea4002e-4319-4c7a-9497-ff7043b869f1",
+              "name": "age",
+              "value": "={{ $json.body.age }}",
+              "type": "string"
+            },
+            {
+              "id": "8d821e0a-d479-4feb-8b37-3edea4107ce0",
+              "name": "specialization",
+              "value": "={{ $json.body.specialization }}",
+              "type": "string"
+            },
+            {
+              "id": "2df8c333-fa1f-4308-8643-d890a11eb2d5",
+              "name": "disease",
+              "value": "={{ $json.body.disease }}",
+              "type": "string"
+            },
+            {
+              "id": "470d418f-d122-4de8-a891-d5eb71160f59",
+              "name": "doctorId",
+              "value": "={{ $json.body.doctorId }}",
+              "type": "string"
+            },
+            {
+              "id": "589f677a-f582-473b-aff1-7f0295fac2a2",
+              "name": "doctorName",
+              "value": "={{ $json.body.doctorName }}",
+              "type": "string"
+            },
+            {
+              "id": "0db38cfc-26c5-465a-a6bd-eea91c6bd050",
+              "name": "appointmentDate",
+              "value": "={{ $json.body.appointmentDate }}",
+              "type": "string"
+            },
+            {
+              "id": "abd7b49a-f1fa-4a8b-96d9-730ae565d389",
+              "name": "appointmentTime",
+              "value": "={{ $json.body.appointmentTime }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        -16
+      ],
+      "id": "1213c391-20eb-4441-b31f-8ac363f681b1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT COUNT(*) as slot_count \nFROM appointments \nWHERE doctor_id = '{{ $json.doctorId }}' \n  AND appointment_date = '{{ $json.appointmentDate }}' \n  AND appointment_time = '{{ $json.appointmentTime }}' \n  AND status = 'confirmed'\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -32,
+        -16
+      ],
+      "id": "1296ebd1-75b6-490d-a544-684d6cd8fcf4",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "mySql": {
+          "id": "8pdO68uZPD5G4qtw",
+          "name": "MySQL account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e5a663ac-7d27-4769-a428-4c9f58fc345b",
+              "leftValue": "={{ $json.slot_count }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        176,
+        -16
+      ],
+      "id": "d040eda6-20b2-4de2-857d-577f0a7eab30",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        800,
+        80
+      ],
+      "id": "24a59dc8-fc52-4379-afdd-b5e55aaa48ae",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "table": {
+          "__rl": true,
+          "value": "appointments",
+          "mode": "list",
+          "cachedResultName": "appointments"
+        },
+        "dataMode": "defineBelow",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "patient_name",
+              "value": "={{ $('Edit Fields').item.json.patientName }}"
+            },
+            {
+              "column": "phone",
+              "value": "={{ $('Edit Fields').item.json.phone }}"
+            },
+            {
+              "column": "email",
+              "value": "={{ $('Edit Fields').item.json.email }}"
+            },
+            {
+              "column": "age",
+              "value": "={{ $('Edit Fields').item.json.age }}"
+            },
+            {
+              "column": "specialization",
+              "value": "={{ $('Edit Fields').item.json.specialization }}"
+            },
+            {
+              "column": "disease",
+              "value": "={{ $('Edit Fields').item.json.disease }}"
+            },
+            {
+              "column": "doctor_id",
+              "value": "={{ $('Edit Fields').item.json.doctorId }}"
+            },
+            {
+              "column": "doctor_name",
+              "value": "={{ $('Edit Fields').item.json.doctorName }}"
+            },
+            {
+              "column": "appointment_date",
+              "value": "={{ $('Edit Fields').item.json.appointmentDate }}"
+            },
+            {
+              "column": "appointment_time",
+              "value": "={{ $('Edit Fields').item.json.appointmentTime }}"
+            },
+            {
+              "column": "status",
+              "value": "confirmed"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        400,
+        -144
+      ],
+      "id": "2d478dfe-3234-48c8-9840-7ee0b1c465ec",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "mySql": {
+          "id": "8pdO68uZPD5G4qtw",
+          "name": "MySQL account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Appointment booked successfully! You will receive a confirmation email shortly.\",\n  \"appointmentId\": \"APT{{ $('Insert rows in a table').item.json.insertId }}\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        800,
+        -144
+      ],
+      "id": "d62af802-0941-421a-88cb-e4fd23a96326",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields').item.json.email }}",
+        "subject": "=Appointment Confirmation - {{ $('Edit Fields').item.json.appointmentDate }}",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\n        .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n        .header { background: #4CAF50; color: white; padding: 20px; text-align: center; border-radius: 5px; }\n        .content { background: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 5px; }\n        .detail { margin: 10px 0; }\n        .label { font-weight: bold; color: #555; }\n        .footer { text-align: center; color: #777; font-size: 12px; margin-top: 20px; }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"header\">\n            <h1>✅ Appointment Confirmed!</h1>\n        </div>\n        \n        <div class=\"content\">\n            <p>Dear <strong>{{ $('Edit Fields').item.json.patientName }}</strong>,</p>\n            \n            <p>Your appointment has been successfully booked at <strong>City Care Hospital</strong>.</p>\n            \n            <h3>Appointment Details:</h3>\n            \n            <div class=\"detail\">\n                <span class=\"label\">📅 Date:</span> {{ $('Edit Fields').item.json.appointmentDate }}\n            </div>\n            \n            <div class=\"detail\">\n                <span class=\"label\">🕐 Time:</span> {{ $('Edit Fields').item.json.appointmentTime }}\n            </div>\n            \n            <div class=\"detail\">\n                <span class=\"label\">👨‍⚕️ Doctor:</span> {{ $('Edit Fields').item.json.doctorName }}\n            </div>\n            \n            <div class=\"detail\">\n                <span class=\"label\">🏥 Specialization:</span> {{ $('Edit Fields').item.json.specialization }}\n            </div>\n            \n            <div class=\"detail\">\n                <span class=\"label\">📱 Contact:</span> {{ $('Edit Fields').item.json.phone }}\n            </div>\n            \n            <hr>\n            \n            <h3>Important Instructions:</h3>\n            <ul>\n                <li>Please arrive 15 minutes before your appointment</li>\n                <li>Bring any relevant medical records or reports</li>\n                <li>Carry a valid ID proof</li>\n                <li>If you need to reschedule, please contact us 24 hours in advance</li>\n            </ul>\n            \n            <p><strong>Contact Us:</strong> +91-XXXXXXXXXX | info@citycarehospital.com</p>\n        </div>\n        \n        <div class=\"footer\">\n            <p>This is an automated confirmation email. Please do not reply.</p>\n            <p>&copy; 2026 City Care Hospital. All rights reserved.</p>\n        </div>\n    </div>\n</body>\n</html>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        592,
+        -144
+      ],
+      "id": "719a66d8-022c-4f12-b969-d1aa3786b4a6",
+      "name": "Send a message",
+      "webhookId": "1b7ad2d3-57a2-44a3-a3d1-0d6cb2435536",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "qdxerbxaXehCnwfi",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const allSlots = [\n  '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM',\n  '11:00 AM', '11:30 AM', '12:00 PM',\n  '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM',\n  '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM',\n  '06:00 PM', '06:30 PM', '07:00 PM'\n];\n\nconst bookedSlots = $input.all().map(item => item.json.appointment_time);\nconst availableSlots = allSlots.filter(slot => !bookedSlots.includes(slot));\nconst appointmentDate = $('Edit Fields').item.json.appointmentDate;\n\nconst alternatives = availableSlots.slice(0, 5).map(time => ({\n  date: appointmentDate,\n  time: time\n}));\n\nreturn [{\n  json: {\n    success: false,\n    message: alternatives.length > 0 \n      ? 'This slot is already booked! Please select from available alternatives below.' \n      : 'No slots available on this date. Please select another date.',\n    alternatives: alternatives\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        80
+      ],
+      "id": "827ec071-62cb-48c6-9069-8a2b453c29b8",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT appointment_time \nFROM appointments \nWHERE doctor_id = '{{ $('Edit Fields').item.json.doctorId }}' \n  AND appointment_date = '{{ $('Edit Fields').item.json.appointmentDate }}' \n  AND status = 'confirmed'\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        384,
+        80
+      ],
+      "id": "364ed9ba-0f1c-4c06-b8b4-67e83c2c6a7e",
+      "name": "Execute a SQL query1",
+      "credentials": {
+        "mySql": {
+          "id": "8pdO68uZPD5G4qtw",
+          "name": "MySQL account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "localhost:5678",
+            "connection": "keep-alive",
+            "content-length": "366",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+            "sec-ch-ua": "\"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"144\", \"Google Chrome\";v=\"144\"",
+            "content-type": "application/json",
+            "sec-ch-ua-mobile": "?0",
+            "accept": "*/*",
+            "origin": "http://localhost:8000",
+            "sec-fetch-site": "same-site",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-dest": "empty",
+            "referer": "http://localhost:8000/",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "en-US,en;q=0.9,mr;q=0.8"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "patientName": "Aditya Gavhane",
+            "phone": "8177804900",
+            "email": "gavhaneaditya798@gmail.com",
+            "age": "33",
+            "specialization": "pediatrics",
+            "disease": "123 Healthcare Avenue\n\nPune, Maharashtra - 411001",
+            "doctorId": "dr_kavita",
+            "doctorName": "Dr. Kavita Reddy (Pediatrician)",
+            "appointmentDate": "2026-02-20",
+            "appointmentTime": "10:30 AM",
+            "submittedAt": "2026-02-12T17:06:35.912Z"
+          },
+          "webhookUrl": "http://localhost:5678/webhook/appointment-booking",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "30c0596d-c276-4bd7-b345-07ad4a0ae60f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "51295f8c9d2c948057d5a4ed47bc72233a6dacf8da84254c3fa0ae93cf4b3423"
+  },
+  "id": "RkZpi9op6l7iSn4n",
+  "tags": []
+}

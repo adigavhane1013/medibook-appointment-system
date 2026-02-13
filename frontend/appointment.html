@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Book an appointment with our expert doctors">
+    <title>Book Appointment - City Care Hospital</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/appointment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <i class="fas fa-hospital"></i>
+                    <span>City Care Hospital</span>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#doctors">Our Doctors</a></li>
+                    <li><a href="index.html#about">About Us</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="appointment.html" class="btn-appointment active">Book Appointment</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Appointment Form Section -->
+    <section class="appointment-section">
+        <div class="container">
+            <div class="appointment-header">
+                <h1>Book Your Appointment</h1>
+                <p>Fill in the details below and we'll confirm your appointment shortly</p>
+            </div>
+
+            <div class="appointment-container">
+                <!-- Form Card -->
+                <div class="form-card">
+                    <form id="appointmentForm" class="appointment-form">
+                        <!-- Step 1: Personal Information -->
+                        <div class="form-step active" id="step1">
+                            <h2 class="step-title">
+                                <span class="step-number">1</span>
+                                Personal Information
+                            </h2>
+                            
+                            <div class="form-group">
+                                <label for="patientName">
+                                    <i class="fas fa-user"></i> Full Name *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="patientName" 
+                                    name="patientName" 
+                                    placeholder="Enter your full name"
+                                    required
+                                >
+                                <span class="error-message" id="nameError"></span>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone">
+                                        <i class="fas fa-phone"></i> Phone Number *
+                                    </label>
+                                    <input 
+                                        type="tel" 
+                                        id="phone" 
+                                        name="phone" 
+                                        placeholder="10-digit mobile number"
+                                        pattern="[0-9]{10}"
+                                        required
+                                    >
+                                    <span class="error-message" id="phoneError"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">
+                                        <i class="fas fa-envelope"></i> Email Address *
+                                    </label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        placeholder="your.email@example.com"
+                                        required
+                                    >
+                                    <span class="error-message" id="emailError"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="age">
+                                    <i class="fas fa-calendar-alt"></i> Age *
+                                </label>
+                                <input 
+                                    type="number" 
+                                    id="age" 
+                                    name="age" 
+                                    placeholder="Enter your age"
+                                    min="1"
+                                    max="120"
+                                    required
+                                >
+                                <span class="error-message" id="ageError"></span>
+                            </div>
+
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-primary btn-next" onclick="nextStep(1)">
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Medical Information -->
+                        <div class="form-step" id="step2">
+                            <h2 class="step-title">
+                                <span class="step-number">2</span>
+                                Medical Information
+                            </h2>
+
+                            <div class="form-group">
+                                <label for="specialization">
+                                    <i class="fas fa-stethoscope"></i> Select Specialization *
+                                </label>
+                                <select id="specialization" name="specialization" required>
+                                    <option value="">-- Choose Specialization --</option>
+                                    <option value="cardiology">Cardiology (Heart)</option>
+                                    <option value="neurology">Neurology (Brain & Nerves)</option>
+                                    <option value="orthopedics">Orthopedics (Bones & Joints)</option>
+                                    <option value="pediatrics">Pediatrics (Children)</option>
+                                    <option value="dermatology">Dermatology (Skin)</option>
+                                    <option value="ent">ENT (Ear, Nose, Throat)</option>
+                                    <option value="ophthalmology">Ophthalmology (Eyes)</option>
+                                    <option value="dental">Dental Care</option>
+                                    <option value="general">General Physician</option>
+                                </select>
+                                <span class="error-message" id="specializationError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="disease">
+                                    <i class="fas fa-notes-medical"></i> Reason for Visit / Symptoms *
+                                </label>
+                                <textarea 
+                                    id="disease" 
+                                    name="disease" 
+                                    rows="4" 
+                                    placeholder="Describe your symptoms or reason for consultation"
+                                    required
+                                ></textarea>
+                                <span class="error-message" id="diseaseError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="doctor">
+                                    <i class="fas fa-user-md"></i> Preferred Doctor *
+                                </label>
+                                <select id="doctor" name="doctor" required>
+                                    <option value="">-- Select Specialization First --</option>
+                                </select>
+                                <span class="error-message" id="doctorError"></span>
+                            </div>
+
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-secondary btn-prev" onclick="prevStep(2)">
+                                    <i class="fas fa-arrow-left"></i> Previous
+                                </button>
+                                <button type="button" class="btn btn-primary btn-next" onclick="nextStep(2)">
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Appointment Date & Time -->
+                        <div class="form-step" id="step3">
+                            <h2 class="step-title">
+                                <span class="step-number">3</span>
+                                Select Date & Time
+                            </h2>
+
+                            <div class="form-group">
+                                <label for="appointmentDate">
+                                    <i class="fas fa-calendar"></i> Appointment Date *
+                                </label>
+                                <input 
+                                    type="date" 
+                                    id="appointmentDate" 
+                                    name="appointmentDate" 
+                                    required
+                                >
+                                <span class="error-message" id="dateError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="appointmentTime">
+                                    <i class="fas fa-clock"></i> Preferred Time Slot *
+                                </label>
+                                <select id="appointmentTime" name="appointmentTime" required>
+                                    <option value="">-- Select Date First --</option>
+                                </select>
+                                <span class="error-message" id="timeError"></span>
+                                <div id="availabilityMessage" class="availability-message"></div>
+                            </div>
+
+                            <div class="info-box">
+                                <i class="fas fa-info-circle"></i>
+                                <p><strong>Note:</strong> Appointments are subject to doctor availability. You will receive a confirmation email once your appointment is confirmed.</p>
+                            </div>
+
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-secondary btn-prev" onclick="prevStep(3)">
+                                    <i class="fas fa-arrow-left"></i> Previous
+                                </button>
+                                <button type="submit" class="btn btn-success btn-submit" id="submitBtn">
+                                    <i class="fas fa-check"></i> Book Appointment
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Progress Indicator -->
+                    <div class="progress-indicator">
+                        <div class="progress-step active" data-step="1">
+                            <div class="progress-circle">1</div>
+                            <span>Personal Info</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="2">
+                            <div class="progress-circle">2</div>
+                            <span>Medical Info</span>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="3">
+                            <div class="progress-circle">3</div>
+                            <span>Date & Time</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Sidebar -->
+                <div class="info-sidebar">
+                    <div class="info-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Working Hours</h3>
+                        <p>Mon - Sat: 8:00 AM - 8:00 PM</p>
+                        <p>Sunday: 9:00 AM - 2:00 PM</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-phone-alt"></i>
+                        <h3>Emergency Contact</h3>
+                        <p class="highlight">+91 20 9999 9999</p>
+                        <p>Available 24/7</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Location</h3>
+                        <p>123 Healthcare Avenue</p>
+                        <p>Pune, Maharashtra - 411001</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email Us</h3>
+                        <p>appointments@citycarehospital.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Appointment Booked Successfully!</h2>
+            <p id="successMessage"></p>
+            <div class="appointment-details" id="appointmentDetails"></div>
+            <button class="btn btn-primary" onclick="closeModal()">Close</button>
+            <a href="index.html" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content error">
+            <div class="modal-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h2>Slot Not Available</h2>
+            <p id="errorMessage"></p>
+            <div class="alternative-slots" id="alternativeSlots"></div>
+            <button class="btn btn-primary" onclick="closeModal()">Try Again</button>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Processing your appointment...</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 City Care Hospital. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="config/config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/appointment.js"></script>
+</body>
+</html>

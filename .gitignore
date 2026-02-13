@@ -1,0 +1,29 @@
+# Credentials and Config
+config.js
+*.env
+credentials.json
+
+# Database
+*.sql.backup
+dump.sql
+
+# Node modules (if using)
+node_modules/
+package-lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# n8n sensitive data
+n8n-credentials.json
