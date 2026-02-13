@@ -1,7 +1,3 @@
-You already dumped half a thesis into that README and then asked to “arrange” it. Classic developer move: build solid stuff, then present it like a cupboard where everything is technically inside but nothing is where it should be. Fine. I reorganized it so it actually reads like something recruiters or reviewers won’t abandon halfway through.
-
----
-
 # 🏥 MediBook Appointment System
 
 A full-stack hospital appointment booking system that provides real-time slot availability, automated email confirmations, and intelligent alternative appointment suggestions.
