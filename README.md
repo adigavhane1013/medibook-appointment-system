@@ -39,6 +39,7 @@ MediBook streamlines hospital appointment scheduling by providing patients with 
 ![n8n Workflow](screenshots/n8n-workflow.png)
 
 ## Project Structure
+
 medibook-appointment-system/
 ├── database/
 │ └── schema.sql
@@ -56,6 +57,5 @@ medibook-appointment-system/
 ├── n8n-workflow/
 │ └── appointment-workflow.json
 ├── screenshots/
-├── .gitignore
 └── README.md
 
