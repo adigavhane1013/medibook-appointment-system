@@ -1,47 +1,42 @@
-# 🏥 Hospital Appointment Booking System
+# MediBook Appointment System
 
-A full-stack web application for managing hospital appointments with real-time availability checking, automated email confirmations, and intelligent slot recommendations.
+A full-stack hospital appointment booking system with real-time availability checking, automated email notifications, and intelligent alternative slot suggestions.
 
-![Project Status](https://img.shields.io/badge/status-active-success.svg)
+![Status](https://img.shields.io/badge/status-active-success.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-## ✨ Features
+## Overview
 
-- **Multi-step Booking Form**: User-friendly 3-step appointment booking process
-- **Real-time Availability**: Checks actual database availability before booking
-- **Smart Alternatives**: Suggests available time slots when requested slot is booked
-- **Email Confirmations**: Automated HTML email notifications via Gmail
-- **Doctor Management**: Multiple doctors across 9+ specializations
-- **Data Validation**: Frontend and backend validation for all inputs
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
+MediBook streamlines hospital appointment scheduling by providing patients with a seamless booking experience while automatically managing slot availability and sending confirmation emails through workflow automation.
 
-## 🛠️ Tech Stack
+## Key Features
 
-### Frontend
-- HTML5, CSS3, JavaScript (ES6+)
-- Responsive UI with modern design patterns
+- **Multi-step Form** - 3-step booking process with real-time validation
+- **Real-time Availability** - Checks database before confirming appointments
+- **Smart Suggestions** - Recommends alternative slots when unavailable
+- **Automated Emails** - Instant HTML confirmation via Gmail
+- **Responsive Design** - Works seamlessly on all devices
 
-### Backend
-- **n8n** - Workflow automation platform
-- **MySQL** - Database for appointment storage
-- **Gmail API** - Email notifications
+## Tech Stack
 
-### Key Technologies
-- REST API (n8n webhooks)
-- SQL queries with parameterized inputs
-- JavaScript async/await patterns
+**Frontend:** HTML5, CSS3, JavaScript (ES6+)  
+**Backend:** n8n Workflow Automation  
+**Database:** MySQL  
+**Email Service:** Gmail API  
 
-## 📋 Prerequisites
+## Screenshots
 
-- Node.js (v14+)
-- MySQL (v5.7+)
-- n8n (latest version)
-- Gmail account with App Password enabled
+### Homepage
+![Homepage](screenshots/homepage.png)
 
-## 🚀 Installation
+### Multi-step Booking Form
+![Booking Form](screenshots/booking-form.png)
 
-### 1. Clone the Repository
+### Success Confirmation
+![Success Message](screenshots/success-message.png)
 
-```bash
-git clone https://github.com/YOUR_USERNAME/hospital-appointment-system.git
-cd hospital-appointment-system
+### n8n Workflow Architecture
+![n8n Workflow](screenshots/n8n-workflow.png)
+
+## Project Structure
+
